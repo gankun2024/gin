@@ -98,7 +98,7 @@ func getEnv(key, defaultValue string) string {
 func getEnvAsInt(key string, defaultValue int) int {
 	if value, exists := os.LookupEnv(key); exists {
 		if intVal, err := fmt.Sscanf(value, "%d"); err == nil {
-			return intVal[0]
+			return intVal
 		}
 	}
 	return defaultValue

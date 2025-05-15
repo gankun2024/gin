@@ -7,7 +7,7 @@ import (
 	sloggin "github.com/samber/slog-gin"
 
 	"github.com/gankun2024/gin-demo-project/internal/api/handlers"
-	"github.com/gankun2024/gin-demo-project/internal/api/middleware"
+	// "github.com/gankun2024/gin-demo-project/internal/api/middleware"
 )
 
 // Setup configures all routes for the application

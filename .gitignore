@@ -35,3 +35,6 @@ go.work
 # Temporary files
 tmp/
 temp/
+
+# Output files
+out

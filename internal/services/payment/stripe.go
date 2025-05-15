@@ -1,9 +1,11 @@
 package payment
 
 import (
-	"github.com/stripe/stripe-go/v74"
-	"github.com/stripe/stripe-go/v74/checkout/session"
-	"github.com/stripe/stripe-go/v74/webhook"
+	"encoding/json"
+
+	"github.com/stripe/stripe-go/v81"
+	"github.com/stripe/stripe-go/v81/checkout/session"
+	"github.com/stripe/stripe-go/v81/webhook"
 
 	"github.com/gankun2024/gin-demo-project/internal/config"
 	"github.com/gankun2024/gin-demo-project/internal/db/models"
@@ -60,13 +62,13 @@ func CreateCheckoutSession(
 
 	// Store session in database
 	paymentSession := &models.PaymentSession{
-		ID:           s.ID,
-		UserID:       userID,
-		PriceID:      priceID,
-		Status:       string(s.Status),
-		PaymentType:  string(s.Mode),
-		CreatedAt:    s.Created,
-		ExpiresAt:    s.Expires,
+		ID:          s.ID,
+		UserID:      userID,
+		PriceID:     priceID,
+		Status:      string(s.Status),
+		PaymentType: string(s.Mode),
+		CreatedAt:   s.Created,
+		// ExpiresAt:    s.Expires,
 		SuccessURL:   successURL,
 		CancelURL:    cancelURL,
 		CustomerName: customerName,
@@ -111,7 +113,7 @@ func ProcessWebhook(payload []byte, signature string) (*stripe.Event, error) {
 // HandleSessionCompleted handles the checkout.session.completed event
 func HandleSessionCompleted(event *stripe.Event) error {
 	var checkoutSession stripe.CheckoutSession
-	err := stripe.Unmarshal(event.Data.Raw, &checkoutSession)
+	err := json.Unmarshal(event.Data.Raw, &checkoutSession)
 	if err != nil {
 		return err
 	}
@@ -140,7 +142,7 @@ func HandleSessionCompleted(event *stripe.Event) error {
 // HandleSubscriptionCreated handles the customer.subscription.created event
 func HandleSubscriptionCreated(event *stripe.Event) error {
 	var subscription stripe.Subscription
-	err := stripe.Unmarshal(event.Data.Raw, &subscription)
+	err := json.Unmarshal(event.Data.Raw, &subscription)
 	if err != nil {
 		return err
 	}
@@ -153,7 +155,7 @@ func HandleSubscriptionCreated(event *stripe.Event) error {
 // HandleSubscriptionUpdated handles the customer.subscription.updated event
 func HandleSubscriptionUpdated(event *stripe.Event) error {
 	var subscription stripe.Subscription
-	err := stripe.Unmarshal(event.Data.Raw, &subscription)
+	err := json.Unmarshal(event.Data.Raw, &subscription)
 	if err != nil {
 		return err
 	}
@@ -166,7 +168,7 @@ func HandleSubscriptionUpdated(event *stripe.Event) error {
 // HandleSubscriptionCanceled handles the customer.subscription.deleted event
 func HandleSubscriptionCanceled(event *stripe.Event) error {
 	var subscription stripe.Subscription
-	err := stripe.Unmarshal(event.Data.Raw, &subscription)
+	err := json.Unmarshal(event.Data.Raw, &subscription)
 	if err != nil {
 		return err
 	}
@@ -179,7 +181,7 @@ func HandleSubscriptionCanceled(event *stripe.Event) error {
 // HandleInvoicePaid handles the invoice.paid event
 func HandleInvoicePaid(event *stripe.Event) error {
 	var invoice stripe.Invoice
-	err := stripe.Unmarshal(event.Data.Raw, &invoice)
+	err := json.Unmarshal(event.Data.Raw, &invoice)
 	if err != nil {
 		return err
 	}
@@ -192,7 +194,7 @@ func HandleInvoicePaid(event *stripe.Event) error {
 // HandleInvoicePaymentFailed handles the invoice.payment_failed event
 func HandleInvoicePaymentFailed(event *stripe.Event) error {
 	var invoice stripe.Invoice
-	err := stripe.Unmarshal(event.Data.Raw, &invoice)
+	err := json.Unmarshal(event.Data.Raw, &invoice)
 	if err != nil {
 		return err
 	}
