@@ -76,13 +76,13 @@ func Load() (*Config, error) {
 	}
 
 	// Validate required configurations
-	if cfg.Auth.JWTSecret == "" {
-		return nil, fmt.Errorf("JWT_SECRET is required")
-	}
+	// if cfg.Auth.JWTSecret == "" {
+	// 	return nil, fmt.Errorf("JWT_SECRET is required")
+	// }
 
-	if cfg.Stripe.SecretKey == "" {
-		return nil, fmt.Errorf("STRIPE_SECRET_KEY is required")
-	}
+	// if cfg.Stripe.SecretKey == "" {
+	// 	return nil, fmt.Errorf("STRIPE_SECRET_KEY is required")
+	// }
 
 	return cfg, nil
 }
