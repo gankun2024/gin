@@ -17,7 +17,7 @@ func Setup(r *gin.Engine, logger *slog.Logger) {
 	r.Use(gin.Recovery())
 
 	// Public routes
-	public := r.Group("/api/v1")
+	public := r.Group("/v1")
 	{
 		// Health check
 		public.GET("/health", handlers.HealthCheck)
