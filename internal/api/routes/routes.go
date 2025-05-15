@@ -16,6 +16,8 @@ func Setup(r *gin.Engine, logger *slog.Logger) {
 	r.Use(sloggin.New(logger))
 	r.Use(gin.Recovery())
 
+	r.GET("/", handlers.HomePage)
+
 	// Public routes
 	public := r.Group("/v1")
 	{
