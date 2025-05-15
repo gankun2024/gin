@@ -20,7 +20,7 @@ func main() {
 	cfg, err := config.Load()
 	if err != nil {
 		log.Error("Failed to load configuration", slog.Any("error", err))
-		os.Exit(1)
+		// os.Exit(1)
 	}
 
 	// Set Gin mode
